@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Model {
+  id            String   @id @default(cuid())
+  modelId       String   @unique
+  name          String
+  provider      String
+  description   String?
+  capabilities  String[]
+  contextLength Int
+  maxTokens     Int?
+  promptPrice     Float
+  completionPrice Float
+  tags            String[]
+  recommendedFor  String[]
+  codingScore     Int? @default(0)
+  reasoningScore  Int? @default(0)
+  writingScore    Int? @default(0)
+  chineseScore    Int? @default(0)
+  speedScore      Int? @default(0)
+  websiteUrl    String?
+  docsUrl       String?
+  isActive      Boolean  @default(true)
+  usageCount    Int      @default(0)
+  ratingAvg     Float?   @default(0)
+  ratingCount   Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model UserSubmission {
+  id          String   @id @default(cuid())
+  modelId     String
+  scenario    String
+  rating      Int
+  review      String?
+  latencyMs   Int?
+  costPer1k   Float?
+  userEmail   String?
+  userName    String?
+  isApproved  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model ApiUsage {
+  id          String   @id @default(cuid())
+  modelId     String
+  provider    String
+  promptTokens     Int
+  completionTokens Int
+  totalTokens      Int
+  costUsd     Float
+  latencyMs   Int
+  status      String
+  createdAt   DateTime @default(now())
+}

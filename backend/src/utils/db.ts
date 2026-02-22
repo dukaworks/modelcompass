@@ -1,4 +1,11 @@
-// 数据库工具（MVP使用内存数据，后续连接Prisma）
-export const prisma = {
-  // 占位，后续接入真实数据库
+import { PrismaClient } from '@prisma/client';
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
 };
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
+}
