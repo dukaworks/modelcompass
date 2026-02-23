@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # PostgreSQL 数据库
   postgres:
     image: postgres:15-alpine
     container_name: modelcompass-db
@@ -17,21 +18,65 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - modelcompass-network
 
-  # 可选：运行爬虫服务
-  crawler:
+  # 后端 API 服务
+  backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.crawler
+      dockerfile: Dockerfile
+    container_name: modelcompass-backend
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATABASE_URL=postgresql://modelcompass:password@postgres:5432/modelcompass?schema=public
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+    ports:
+      - "3001:3001"
     depends_on:
       postgres:
         condition: service_healthy
-    environment:
-      DATABASE_URL: "postgresql://modelcompass:password@postgres:5432/modelcompass?schema=public"
     volumes:
       - ./backend:/app
       - /app/node_modules
-    command: npx tsx src/services/hf-crawler.ts
+    networks:
+      - modelcompass-network
+    command: >
+      sh -c "npx prisma migrate deploy &&
+             npm run db:seed &&
+             npm run dev"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # 前端 Next.js 服务
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: modelcompass-frontend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - modelcompass-network
+    command: npm run dev
 
 volumes:
   postgres_data:
+
+networks:
+  modelcompass-network:
+    driver: bridge

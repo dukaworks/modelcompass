@@ -16,10 +16,10 @@ RUN npx prisma generate
 # 复制源代码
 COPY . .
 
-# 构建
-RUN npm run build
+# 开发模式不构建，生产模式需要构建
+# RUN npm run build
 
 EXPOSE 3001
 
-# 启动命令（包含迁移和种子）
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:seed && npm start"]
+# 默认开发命令（docker-compose 会覆盖）
+CMD ["npm", "run", "dev"]
