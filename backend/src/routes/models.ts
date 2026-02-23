@@ -6,7 +6,7 @@ const router = Router();
 // GET /api/models - 获取所有模型列表
 router.get('/', async (req, res) => {
   try {
-    const { provider, capability } = req.query;
+    const { provider, capability, free } = req.query;
     
     const where: any = { isActive: true };
     
@@ -20,6 +20,12 @@ router.get('/', async (req, res) => {
       };
     }
     
+    // 筛选免费模型
+    if (free === 'true') {
+      where.promptPrice = 0;
+      where.completionPrice = 0;
+    }
+    
     const models = await prisma.model.findMany({
       where,
       orderBy: { usageCount: 'desc' }
@@ -28,7 +34,7 @@ router.get('/', async (req, res) => {
     res.json({ 
       success: true, 
       data: models,
-      meta: { total: models.length }
+      meta: { total: models.length, free: free === 'true' }
     });
   } catch (error) {
     console.error('Fetch models error:', error);
