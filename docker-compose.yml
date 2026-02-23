@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: modelcompass-db
+    environment:
+      POSTGRES_USER: modelcompass
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: modelcompass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U modelcompass -d modelcompass"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 可选：运行爬虫服务
+  crawler:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.crawler
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://modelcompass:password@postgres:5432/modelcompass?schema=public"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: npx tsx src/services/hf-crawler.ts
+
+volumes:
+  postgres_data:
