@@ -56,7 +56,7 @@ export class ModelHeartbeat {
         await this.hfCrawler.run();
         await this.logHeartbeat('crawl-huggingface', 'success');
       }
-    };
+    });
 
     // 任务3: 社交媒体扫描 (每12小时)
     this.tasks.set('scan-social', {
