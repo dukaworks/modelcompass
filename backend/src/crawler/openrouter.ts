@@ -35,7 +35,7 @@ export async function crawlOpenRouter(): Promise<OpenRouterModel[]> {
     console.log(`✅ 获取到 ${models.length} 个模型`);
     
     return models;
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ OpenRouter 抓取失败:', error.message);
     return [];
   }
@@ -186,7 +186,7 @@ export async function syncOpenRouterModels(): Promise<{ added: number; updated: 
         await prisma.model.create({ data });
         added++;
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(`❌ 处理模型 ${model.id} 失败:`, error.message);
     }
   }

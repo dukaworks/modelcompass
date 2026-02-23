@@ -30,7 +30,7 @@ export async function crawlHuggingFaceLeaderboard(): Promise<LeaderboardModel[]>
     // 这里简化处理，实际可能需要 API 或 headless 浏览器
     console.log('⚠️  HuggingFace 页面抓取需要额外处理');
     return [];
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ HuggingFace 抓取失败:', error.message);
     return [];
   }
@@ -67,7 +67,7 @@ export async function crawlLMSYSArena(): Promise<Map<string, number>> {
     
     console.log(`✅ 获取到 ${scores.size} 个 Arena 评分`);
     return scores;
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ LMSYS 抓取失败:', error.message);
     return new Map();
   }
@@ -119,7 +119,7 @@ export async function updateModelScores(): Promise<void> {
         data: scores
       });
       console.log(`✅ 更新评分: ${modelId}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error(`❌ 更新 ${modelId} 失败:`, error.message);
     }
   }

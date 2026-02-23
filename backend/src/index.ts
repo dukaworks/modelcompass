@@ -6,7 +6,6 @@ import { proxyRouter } from './routes/proxy';
 import { recommendRouter } from './routes/recommend';
 import { adminRouter } from './routes/admin';
 import { heartbeatRouter } from './routes/heartbeat';
-import { adminRouter } from './routes/admin';
 
 dotenv.config();
 

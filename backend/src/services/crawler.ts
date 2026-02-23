@@ -165,17 +165,27 @@ export class ModelCrawler {
           where: { modelId: model.modelId }
         });
 
+        // 确保必需字段有值
+        const modelData = {
+          ...model,
+          contextLength: model.contextLength || 4096,
+          promptPrice: model.promptPrice || 0,
+          completionPrice: model.completionPrice || 0,
+          tags: model.tags || [],
+          capabilities: model.capabilities || ['chat']
+        };
+
         if (existing) {
           await prisma.model.update({
             where: { modelId: model.modelId },
             data: {
-              ...model,
+              ...modelData,
               updatedAt: new Date()
             }
           });
           updated++;
         } else {
-          await prisma.model.create({ data: model });
+          await prisma.model.create({ data: modelData });
           created++;
         }
       } catch (error: any) {
@@ -218,3 +228,6 @@ if (require.main === module) {
   const crawler = new ModelCrawler();
   crawler.run().catch(console.error);
 }
+
+// 别名导出，用于心跳系统
+export { ModelCrawler as OpenRouterCrawler };
