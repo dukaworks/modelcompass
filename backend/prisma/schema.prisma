@@ -61,3 +61,47 @@ model ApiUsage {
   status      String
   createdAt   DateTime @default(now())
 }
+
+// 心跳任务日志
+model HeartbeatLog {
+  id          String   @id @default(cuid())
+  taskName    String
+  status      String   // success, failed, running
+  error       String?
+  duration    Int?     // 执行时间(毫秒)
+  timestamp   DateTime @default(now())
+  
+  @@index([taskName])
+  @@index([status])
+  @@index([timestamp])
+}
+
+// Benchmark 评分表
+model BenchmarkScore {
+  id          String   @id @default(cuid())
+  modelId     String
+  mmlu        Float?
+  humaneval   Float?
+  gsm8k       Float?
+  hellaswag   Float?
+  source      String   // paperswithcode, huggingface, etc.
+  url         String?  // 评测来源链接
+  timestamp   DateTime @default(now())
+  
+  @@index([modelId])
+  @@index([timestamp])
+}
+
+// 社交媒体指标
+model SocialMetric {
+  id              String   @id @default(cuid())
+  modelId         String
+  twitterMentions Int      @default(0)
+  redditScore     Int      @default(0)
+  githubStars     Int      @default(0)
+  sentiment       Float?   // -1 到 1
+  timestamp       DateTime @default(now())
+  
+  @@index([modelId])
+  @@index([timestamp])
+}

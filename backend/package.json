@@ -13,8 +13,11 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
-    "crawler": "tsx src/crawler/index.ts",
-    "crawler:sync": "tsx src/crawler/openrouter.ts"
+    "crawler": "tsx src/services/crawler.ts",
+    "crawler:hf": "tsx src/services/hf-crawler.ts",
+    "heartbeat:start": "tsx src/heartbeat-runner.ts start",
+    "heartbeat:status": "tsx src/heartbeat-runner.ts status",
+    "heartbeat:trigger": "tsx src/heartbeat-runner.ts trigger"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
