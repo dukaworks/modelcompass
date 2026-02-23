@@ -51,6 +51,7 @@ export default function Home() {
           <nav className="hidden md:flex space-x-8">
             <a href="#" className="text-gray-600 hover:text-gray-900">模型库</a>
             <a href="#" className="text-gray-600 hover:text-gray-900">智能推荐</a>
+            <a href="/admin" className="text-gray-600 hover:text-gray-900 font-medium">管理后台</a>
             <a href="#" className="text-gray-600 hover:text-gray-900">API文档</a>
           </nav>
         </div>
