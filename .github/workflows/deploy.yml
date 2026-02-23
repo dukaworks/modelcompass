@@ -24,7 +24,7 @@ jobs:
 
       - name: Deploy to Railway
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.MODEL_COMPASS_RAILWAY }}
         run: |
           cd backend
           railway up --service=modelcompass
