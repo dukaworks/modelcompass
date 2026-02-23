@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { modelsRouter } from './routes/models';
 import { proxyRouter } from './routes/proxy';
 import { recommendRouter } from './routes/recommend';
+import { adminRouter } from './routes/admin';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.get('/health', (req, res) => {
 app.use('/api/models', modelsRouter);
 app.use('/api/proxy', proxyRouter);
 app.use('/api/recommend', recommendRouter);
+app.use('/api/admin', adminRouter);
 
 // Error handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
