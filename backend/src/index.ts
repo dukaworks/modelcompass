@@ -5,6 +5,7 @@ import { modelsRouter } from './routes/models';
 import { proxyRouter } from './routes/proxy';
 import { recommendRouter } from './routes/recommend';
 import { adminRouter } from './routes/admin';
+import { adminRouter } from './routes/admin';
 
 dotenv.config();
 

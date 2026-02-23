@@ -1,62 +1,61 @@
 import { Router } from 'express';
-import { syncOpenRouterModels } from '../crawler/openrouter';
-import { updateModelScores } from '../crawler/index';
+import { ModelCrawler } from '../services/crawler';
 
 const router = Router();
 
-// POST /api/admin/crawler - 触发爬虫（需要鉴权）
-router.post('/crawler', async (req, res) => {
+// POST /api/admin/crawl - 手动触发爬虫
+router.post('/crawl', async (req, res) => {
   try {
-    // TODO: 添加鉴权检查
-    const { source = 'openrouter' } = req.body;
+    const { dryRun = false } = req.body;
     
-    console.log(`🕷️  触发爬虫: ${source}`);
+    const crawler = new ModelCrawler();
     
-    let result;
-    
-    if (source === 'openrouter') {
-      result = await syncOpenRouterModels();
-      await updateModelScores();
+    if (dryRun) {
+      // 只抓取不保存
+      const models = await crawler.crawlFromOpenRouter();
+      res.json({
+        success: true,
+        message: '爬虫测试完成（未保存到数据库）',
+        data: { count: models.length, models: models.slice(0, 5) }
+      });
     } else {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Unknown source' 
+      await crawler.run();
+      res.json({
+        success: true,
+        message: '爬虫任务完成',
+        timestamp: new Date().toISOString()
       });
     }
-    
-    res.json({
-      success: true,
-      data: {
-        source,
-        added: result.added,
-        updated: result.updated,
-        timestamp: new Date().toISOString()
-      }
-    });
   } catch (error: any) {
-    console.error('Crawler error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message
+    console.error('Crawl error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
     });
   }
 });
 
-// GET /api/admin/stats - 获取统计数据
+// GET /api/admin/stats - 统计数据
 router.get('/stats', async (req, res) => {
   try {
-    const modelCount = await prisma.model.count();
-    const activeCount = await prisma.model.count({ where: { isActive: true } });
+    const { prisma } = await import('../utils/db');
+    
+    const totalModels = await prisma.model.count();
+    const activeModels = await prisma.model.count({ where: { isActive: true } });
+    const providers = await prisma.model.groupBy({
+      by: ['provider'],
+      _count: { modelId: true }
+    });
     
     res.json({
       success: true,
       data: {
-        totalModels: modelCount,
-        activeModels: activeCount,
-        providers: await prisma.model.groupBy({
-          by: ['provider'],
-          _count: { id: true }
-        })
+        totalModels,
+        activeModels,
+        providers: providers.map(p => ({
+          name: p.provider,
+          count: p._count.modelId
+        }))
       }
     });
   } catch (error: any) {
@@ -65,6 +64,3 @@ router.get('/stats', async (req, res) => {
 });
 
 export { router as adminRouter };
-
-// 需要导入 prisma
-import { prisma } from '../utils/db';
