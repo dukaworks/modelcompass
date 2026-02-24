@@ -7,8 +7,6 @@ import {
   Brain, 
   Zap, 
   ChevronRight,
-  Github,
-  Twitter,
   Sparkles,
   Globe,
   Cpu,
@@ -160,11 +158,8 @@ export default function Home() {
           <nav className="hidden md:flex items-center space-x-6">
             <a href="/api-service" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">申请API</a>
             <a href="/market" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">模型市场</a>
-            <a href="/chat" className="text-sm text-cyan-400 font-medium hover:text-cyan-300 transition-colors">AI匹配模型</a>
+            <a href="/chat" className="text-sm text-cyan-400 font-medium hover:text-cyan-300 transition-colors">AI匹配</a>
             <a href="/docs" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">文档</a>
-            <a href="https://github.com/dukaworks/modelcompass" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
-              <Github className="w-5 h-5" />
-            </a>
             <UserMenu 
               isLoggedIn={isLoggedIn} 
               user={user}
