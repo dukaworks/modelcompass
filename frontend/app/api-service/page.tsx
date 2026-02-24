@@ -14,6 +14,7 @@ import {
   Compass
 } from 'lucide-react';
 import AuthGuard from '@/components/AuthGuard';
+import Header from '@/components/Header';
 
 const pricingPlans = [
   {
@@ -88,29 +89,7 @@ function ApiServicePage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-slate-100">
-      {/* Header */}
-      <header className="border-b border-slate-800/60 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <a href="/" className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center">
-              <Compass className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              ModelCompass
-            </span>
-          </a>
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="/api-service" className="text-sm text-cyan-400 font-medium">申请API</a>
-            <a href="/market" className="text-sm text-slate-400 hover:text-cyan-400">模型市场</a>
-            <a href="/chat" className="text-sm text-slate-400 hover:text-cyan-400">AI匹配模型</a>
-            <a href="/docs" className="text-sm text-slate-400 hover:text-cyan-400">文档</a>
-            <a href="/login" className="text-sm text-slate-400 hover:text-cyan-400">登录</a>
-            <a href="/login" className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-medium rounded-lg">
-              注册
-            </a>
-          </nav>
-        </div>
-      </header>
+      <Header activePage="api-service" />
 
       {/* Hero */}
       <section className="relative py-20">

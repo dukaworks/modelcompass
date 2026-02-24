@@ -10,13 +10,13 @@ import {
   Eye, 
   EyeOff,
   AlertCircle,
-  Compass,
   User,
   CreditCard,
   Heart,
   Settings,
   LogOut
 } from 'lucide-react';
+import Header from '@/components/Header';
 
 const menuItems = [
   { icon: User, label: '个人资料', href: '/profile' },
@@ -93,19 +93,7 @@ export default function ApiKeysPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-slate-100">
-      {/* Header */}
-      <header className="border-b border-slate-800/60 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <a href="/" className="flex items-center space-x-2">
-            <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              ModelCompass
-            </span>
-          </a>
-          <a href="/" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">
-            返回首页 →
-          </a>
-        </div>
-      </header>
+      <Header />
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-4 gap-6">

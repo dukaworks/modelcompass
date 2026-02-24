@@ -18,7 +18,7 @@ import ModelCard from '@/components/ModelCard';
 import SearchBox from '@/components/SearchBox';
 import RealtimeStats from '@/components/RealtimeStats';
 import DeveloperSection from '@/components/DeveloperSection';
-import UserMenu from '@/components/UserMenu';
+import Header from '@/components/Header';
 
 interface Model {
   id: string;
@@ -144,34 +144,7 @@ export default function Home() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
 
-      {/* Header */}
-      <header className="relative z-10 border-b border-slate-800/60 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-              <Compass className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              ModelCompass
-            </span>
-          </div>
-          <nav className="hidden md:flex items-center space-x-6">
-            <a href="/api-service" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">申请API</a>
-            <a href="/market" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">模型市场</a>
-            <a href="/chat" className="relative px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-400 text-sm font-semibold rounded-lg border border-cyan-500/30 hover:border-cyan-400 hover:from-cyan-500/30 hover:to-blue-600/30 transition-all">
-              AI匹配
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-            </a>
-            <a href="/docs" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">文档</a>
-            <UserMenu 
-              isLoggedIn={isLoggedIn} 
-              user={user}
-              onLogin={handleLogin}
-              onLogout={handleLogout}
-            />
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative z-10 pt-16 pb-20">
