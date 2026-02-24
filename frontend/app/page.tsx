@@ -89,6 +89,13 @@ const QuickFilter = ({ icon: Icon, label, active = false }: { icon: any; label: 
 export default function Home() {
   const [models, setModels] = useState<Model[]>([]);
   const [loading, setLoading] = useState(true);
+  // 模拟登录状态（后续接真实登录）
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({
+    name: 'Duka',
+    email: 'duka@example.com',
+    balance: 125.50
+  });
 
   useEffect(() => {
     fetchModels();
@@ -111,6 +118,16 @@ export default function Home() {
   const handleSearch = (query: string) => {
     console.log('搜索:', query);
     // TODO: 实现搜索跳转
+  };
+
+  const handleLogin = () => {
+    // 模拟登录
+    setIsLoggedIn(true);
+    window.location.href = '/login';
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
   };
 
   return (
@@ -141,12 +158,19 @@ export default function Home() {
             </span>
           </div>
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="#features" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">特性</a>
-            <a href="#models" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">模型库</a>
-            <a href="/admin" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">管理后台</a>
+            <a href="/api-service" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">申请API</a>
+            <a href="/market" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">模型市场</a>
+            <a href="/chat" className="text-sm text-cyan-400 font-medium hover:text-cyan-300 transition-colors">AI匹配模型</a>
+            <a href="/docs" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">文档</a>
             <a href="https://github.com/dukaworks/modelcompass" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
               <Github className="w-5 h-5" />
             </a>
+            <UserMenu 
+              isLoggedIn={isLoggedIn} 
+              user={user}
+              onLogin={handleLogin}
+              onLogout={handleLogout}
+            />
           </nav>
         </div>
       </header>
