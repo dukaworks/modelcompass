@@ -44,7 +44,7 @@ const quickPrompts = [
   "为我创作一首现代诗",
 ];
 
-export default function ChatPage() {
+function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',

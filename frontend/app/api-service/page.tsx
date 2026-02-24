@@ -77,7 +77,7 @@ const response = await fetch('https://api.modelcompass.ai/v1/chat/completions', 
 const data = await response.json();
 console.log(data.choices[0].message.content);`;
 
-export default function ApiServicePage() {
+function ApiServicePage() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
