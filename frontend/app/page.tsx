@@ -158,7 +158,10 @@ export default function Home() {
           <nav className="hidden md:flex items-center space-x-6">
             <a href="/api-service" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">申请API</a>
             <a href="/market" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">模型市场</a>
-            <a href="/chat" className="text-sm text-cyan-400 font-medium hover:text-cyan-300 transition-colors">AI匹配</a>
+            <a href="/chat" className="relative px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-cyan-400 text-sm font-semibold rounded-lg border border-cyan-500/30 hover:border-cyan-400 hover:from-cyan-500/30 hover:to-blue-600/30 transition-all">
+              AI匹配
+              <span className="absolute -top-1 -right-1 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+            </a>
             <a href="/docs" className="text-sm text-slate-400 hover:text-cyan-400 transition-colors">文档</a>
             <UserMenu 
               isLoggedIn={isLoggedIn} 
