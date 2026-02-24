@@ -52,8 +52,22 @@ export default function LoginPage() {
 
         {/* Card */}
         <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-8 shadow-2xl">
-          {/* Social Login */}
-          <button className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-colors mb-6">
+          {/* Social Login - SIMULATION */}
+          <button 
+            onClick={() => {
+              // 模拟GitHub登录
+              localStorage.setItem('isLoggedIn', 'true');
+              localStorage.setItem('userName', 'Duka');
+              localStorage.setItem('userEmail', 'duka@example.com');
+              localStorage.setItem('userBalance', '125.50');
+              alert('模拟登录成功！（后续将接入真实GitHub OAuth）');
+              window.location.href = '/';
+            }}
+            className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-colors mb-6 relative"
+          >
+            <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-amber-500/20 border border-amber-500/40 text-amber-400 text-xs rounded-full">
+              模拟模式
+            </span>
             <Github className="w-5 h-5" />
             <span>使用 GitHub 继续</span>
           </button>
