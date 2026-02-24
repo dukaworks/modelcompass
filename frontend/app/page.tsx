@@ -159,11 +159,11 @@ export default function Home() {
 
           {/* Title */}
           <h1 className="text-4xl md:text-6xl font-bold text-center mb-4 leading-tight">
-            在 AI 模型的<GradientText>星辰大海</GradientText>中
-            <br />为你指点迷津
+            AI 模型<GradientText>比价平台</GradientText>
+            <br />帮你找到性价比最高的选择
           </h1>
           <p className="text-lg text-slate-400 text-center mb-8 max-w-2xl mx-auto">
-            智能推荐、价格对比、性能评测，自动帮你匹配最适合的大模型
+            汇集 60+ 提供商、393+ 模型，智能匹配你的场景需求，省钱又省心
           </p>
 
           {/* Search Box */}

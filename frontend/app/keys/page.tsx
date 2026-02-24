@@ -111,10 +111,13 @@ export default function ApiKeysPage() {
     setKeys(keys.filter(k => k.id !== id));
   };
 
-  const user = {
-    name: 'Duka',
-    email: 'duka@example.com',
-  };
+  if (!isLoggedIn || !user) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-slate-100">
