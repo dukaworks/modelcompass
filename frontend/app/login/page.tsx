@@ -61,7 +61,7 @@ export default function LoginPage() {
               localStorage.setItem('userEmail', 'duka@example.com');
               localStorage.setItem('userBalance', '125.50');
               alert('模拟登录成功！（后续将接入真实GitHub OAuth）');
-              window.location.href = '/';
+              window.location.href = '/chat'; // 登录后进入AI匹配
             }}
             className="w-full flex items-center justify-center space-x-3 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-slate-300 transition-colors mb-6 relative"
           >

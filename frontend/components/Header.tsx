@@ -39,7 +39,8 @@ export default function Header({ activePage = '' }: HeaderProps) {
 
   const navItems = [
     { href: '/api-service', label: '申请API', id: 'api-service' },
-    { href: '/market', label: 'AI匹配', id: 'market', highlight: true },
+    { href: '/market', label: '模型广场', id: 'market' },
+    { href: '/chat', label: 'AI匹配', id: 'chat', highlight: true },
     { href: '/docs', label: '文档', id: 'docs' },
   ];
 

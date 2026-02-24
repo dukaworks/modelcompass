@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Key, 
   Copy, 
@@ -56,6 +57,30 @@ export default function ApiKeysPage() {
   ]);
   const [showKey, setShowKey] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!loggedIn) {
+      router.push('/login');
+      return;
+    }
+    setIsLoggedIn(true);
+    setUser({
+      name: localStorage.getItem('userName') || 'User',
+      email: localStorage.getItem('userEmail') || 'user@example.com',
+    });
+  }, [router]);
+
+  if (!isLoggedIn || !user) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
   const [isCreating, setIsCreating] = useState(false);
   const [newKeyName, setNewKeyName] = useState('');
 

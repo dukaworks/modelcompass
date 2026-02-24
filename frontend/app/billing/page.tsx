@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { CreditCard, Wallet, History, User, Key, Heart, Settings, LogOut, Plus, ChevronRight } from 'lucide-react';
 import Header from '@/components/Header';
 
@@ -22,7 +23,22 @@ const mockTransactions = [
 export default function BillingPage() {
   const [balance, setBalance] = useState(125.50);
   const [amount, setAmount] = useState('');
-  const user = { name: 'Duka', email: 'duka@example.com' };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!loggedIn) {
+      router.push('/login');
+      return;
+    }
+    setIsLoggedIn(true);
+    setUser({
+      name: localStorage.getItem('userName') || 'User',
+      email: localStorage.getItem('userEmail') || 'user@example.com',
+    });
+  }, [router]);
 
   const handleRecharge = () => {
     const num = parseFloat(amount);
@@ -32,6 +48,14 @@ export default function BillingPage() {
       alert(`充值 ¥${num} 成功！（模拟）`);
     }
   };
+
+  if (!isLoggedIn || !user) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-slate-100">

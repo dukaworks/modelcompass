@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   User, 
   Mail, 
@@ -26,18 +27,36 @@ const menuItems = [
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
-  
-  // 模拟用户数据
-  const user = {
-    name: 'Duka',
-    email: 'duka@example.com',
-    avatar: null,
-    joinDate: '2024-01-15',
-    balance: 125.50,
-    totalCalls: 15420,
-    favoriteModels: 12,
-    apiKeys: 3,
-  };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!loggedIn) {
+      router.push('/login');
+      return;
+    }
+    setIsLoggedIn(true);
+    setUser({
+      name: localStorage.getItem('userName') || 'User',
+      email: localStorage.getItem('userEmail') || 'user@example.com',
+      avatar: null,
+      joinDate: '2024-01-15',
+      balance: parseFloat(localStorage.getItem('userBalance') || '125.50'),
+      totalCalls: 15420,
+      favoriteModels: 12,
+      apiKeys: 3,
+    });
+  }, [router]);
+
+  if (!isLoggedIn || !user) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const stats = [
     { label: '账户余额', value: `¥${user.balance}`, color: 'text-cyan-400', icon: CreditCard },

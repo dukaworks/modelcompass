@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Settings, User, Key, CreditCard, Heart, LogOut, Bell, Shield, Save, Check } from 'lucide-react';
 import Header from '@/components/Header';
 
@@ -21,13 +22,35 @@ export default function SettingsPage() {
     twoFactor: false,
   });
   const [saved, setSaved] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!loggedIn) {
+      router.push('/login');
+      return;
+    }
+    setIsLoggedIn(true);
+    setUser({
+      name: localStorage.getItem('userName') || 'User',
+      email: localStorage.getItem('userEmail') || 'user@example.com',
+    });
+  }, [router]);
 
   const handleSave = () => {
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const user = { name: 'Duka', email: 'duka@example.com' };
+  if (!isLoggedIn || !user) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-slate-100">
