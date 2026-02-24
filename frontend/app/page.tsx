@@ -307,8 +307,7 @@ export default function Home() {
                 立即开始
               </GlowButton>
               <GlowButton variant="secondary">
-                <Github className="w-4 h-4 inline mr-2" />
-                GitHub
+                查看文档
               </GlowButton>
             </div>
           </div>
@@ -323,12 +322,13 @@ export default function Home() {
               <Compass className="w-5 h-5 text-cyan-400" />
               <span className="font-medium text-slate-300">ModelCompass</span>
             </div>
-            <div className="flex items-center space-x-4 text-slate-500">
+            <div className="flex items-center space-x-4 text-sm text-slate-500">
               <a href="https://github.com/dukaworks/modelcompass" className="hover:text-cyan-400 transition-colors">
-                <Github className="w-5 h-5" />
+                GitHub
               </a>
+              <span className="text-slate-700">|</span>
               <a href="#" className="hover:text-cyan-400 transition-colors">
-                <Twitter className="w-5 h-5" />
+                Twitter
               </a>
             </div>
           </div>
