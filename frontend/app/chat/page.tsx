@@ -22,10 +22,19 @@ import {
   RotateCcw,
   ThumbsUp,
   ThumbsDown,
-  MoreHorizontal
+  MoreHorizontal,
+  MessageSquare
 } from 'lucide-react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// Code highlighting styles (no external dependency)
+const codeStyles = {
+  background: '#1e1e2e',
+  color: '#cdd6f4',
+  padding: '1rem',
+  borderRadius: '0.5rem',
+  fontSize: '0.875rem',
+  fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
+  overflow: 'auto',
+};
 
 interface Message {
   id: string;
@@ -185,7 +194,7 @@ const quickPrompts = [
   { icon: Zap, text: "处理大量中文法律文档" },
 ];
 
-// 代码块组件
+// 代码块组件 (纯CSS高亮，无外部依赖)
 const CodeBlockComponent = ({ code, language }: { code: string; language: string }) => {
   const [copied, setCopied] = useState(false);
   
@@ -193,6 +202,17 @@ const CodeBlockComponent = ({ code, language }: { code: string; language: string
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+  
+  // 简单的语法着色
+  const highlightCode = (code: string) => {
+    return code
+      .replace(/(".*?")/g, '<span style="color:#a6e3a1">$1</span>') // 字符串
+      .replace(/(\b\d+\b)/g, '<span style="color:#fab387">$1</span>') // 数字
+      .replace(/(\b(?:const|let|var|function|return|if|else|for|while|import|from|export|interface|type)\b)/g, '<span style="color:#cba6f7">$1</span>') // 关键字
+      .replace(/(\b(?:true|false|null|undefined)\b)/g, '<span style="color:#f9e2af">$1</span>') // 布尔值
+      .replace(/(\/\/.*$)/gm, '<span style="color:#6c7086">$1</span>') // 注释
+      .replace(/(\/\*[\s\S]*?\*\/)/g, '<span style="color:#6c7086">$1</span>'); // 多行注释
   };
   
   return (
@@ -207,18 +227,11 @@ const CodeBlockComponent = ({ code, language }: { code: string; language: string
           <span>{copied ? '已复制' : '复制'}</span>
         </button>
       </div>
-      <SyntaxHighlighter
-        language={language}
-        style={vscDarkPlus}
-        customStyle={{
-          margin: 0,
-          padding: '1rem',
-          background: 'transparent',
-          fontSize: '0.875rem',
-        }}
-      >
-        {code}
-      </SyntaxHighlighter>
+      <pre 
+        className="m-0 p-4 overflow-auto text-sm"
+        style={codeStyles}
+        dangerouslySetInnerHTML={{ __html: highlightCode(code) }}
+      />
     </div>
   );
 };
