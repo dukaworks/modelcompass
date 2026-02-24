@@ -12,6 +12,7 @@ import {
   Zap,
   Compass
 } from 'lucide-react';
+import AuthGuard from '@/components/AuthGuard';
 
 interface Message {
   id: string;
@@ -260,5 +261,14 @@ export default function ChatPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+// 包装一层登录检查
+export default function ChatPageWithAuth() {
+  return (
+    <AuthGuard>
+      <ChatPage />
+    </AuthGuard>
   );
 }

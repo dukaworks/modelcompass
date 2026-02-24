@@ -13,6 +13,7 @@ import {
   Check,
   Compass
 } from 'lucide-react';
+import AuthGuard from '@/components/AuthGuard';
 
 const pricingPlans = [
   {
@@ -276,5 +277,14 @@ export default function ApiServicePage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// 包装一层登录检查
+export default function ApiServicePageWithAuth() {
+  return (
+    <AuthGuard>
+      <ApiServicePage />
+    </AuthGuard>
   );
 }
