@@ -438,9 +438,10 @@ export default function MarketPage() {
             {/* Model Grid - 参考硅基流动风格 */}
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
               {sortedModels.map((model) => (
-                <div 
-                  key={model.id} 
-                  className="group relative bg-slate-900/60 border border-slate-800 rounded-xl p-5 hover:border-cyan-500/30 transition-all hover:-translate-y-0.5"
+                <a
+                  key={model.id}
+                  href={`/models/${model.id}`}
+                  className="group relative bg-slate-900/60 border border-slate-800 rounded-xl p-5 hover:border-cyan-500/30 transition-all hover:-translate-y-0.5 block"
                 >
                   {/* Badges & Favorite */}
                   <div className="absolute top-3 right-3 flex items-center space-x-1">
@@ -533,22 +534,30 @@ export default function MarketPage() {
                       <span className="text-xs text-slate-500">/ 百万 tokens</span>
                     </div>
                     <div className="flex space-x-2">
-                      <a
-                        href={`/chat?model=${model.id}`}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.location.href = `/chat?model=${model.id}`;
+                        }}
                         className="px-3 py-1.5 bg-cyan-500/10 text-cyan-400 text-sm rounded-lg hover:bg-cyan-500/20 transition-colors"
                       >
                         体验
-                      </a>
-                      <a
-                        href="/api-service"
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.location.href = '/api-service';
+                        }}
                         className="px-3 py-1.5 bg-slate-800 text-slate-300 text-sm rounded-lg hover:bg-slate-700 transition-colors"
                       >
                         API
-                      </a>
+                      </button>
                     </div>
                   </div>
-                </div>
-              ))}
+                </a>
+              )}
             </div>
 
             {sortedModels.length === 0 && (
