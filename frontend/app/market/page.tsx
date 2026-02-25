@@ -438,13 +438,12 @@ export default function MarketPage() {
             {/* Model Grid - 参考硅基流动风格 */}
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
               {sortedModels.map((model) => (
-                <a
-                  key={model.id}
-                  href={`/models/${model.id}`}
-                  className="group relative bg-slate-900/60 border border-slate-800 rounded-xl p-5 hover:border-cyan-500/30 transition-all hover:-translate-y-0.5 block"
+                <div 
+                  key={model.id} 
+                  className="group relative bg-slate-900/60 border border-slate-800 rounded-xl p-5 hover:border-cyan-500/30 transition-all hover:-translate-y-0.5"
                 >
-                  {/* Badges & Favorite */}
-                  <div className="absolute top-3 right-3 flex items-center space-x-1">
+                  {/* Badges */}
+                  <div className="absolute top-3 right-3 flex space-x-1">
                     {model.isNew && (
                       <span className="px-2 py-0.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-medium rounded-full">
                         New
@@ -455,19 +454,6 @@ export default function MarketPage() {
                         🔥 Hot
                       </span>
                     )}
-                    <button 
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        alert('收藏功能：将 ' + model.displayName + ' 添加到我的收藏');
-                      }}
-                      className="p-1.5 text-slate-500 hover:text-pink-400 hover:bg-pink-500/10 rounded-lg transition-all"
-                      title="添加到收藏"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                      </svg>
-                    </button>
                   </div>
 
                   {/* Header */}
@@ -534,30 +520,22 @@ export default function MarketPage() {
                       <span className="text-xs text-slate-500">/ 百万 tokens</span>
                     </div>
                     <div className="flex space-x-2">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          window.location.href = `/chat?model=${model.id}`;
-                        }}
+                      <a
+                        href={`/chat?model=${model.id}`}
                         className="px-3 py-1.5 bg-cyan-500/10 text-cyan-400 text-sm rounded-lg hover:bg-cyan-500/20 transition-colors"
                       >
                         体验
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          window.location.href = '/api-service';
-                        }}
+                      </a>
+                      <a
+                        href="/api-service"
                         className="px-3 py-1.5 bg-slate-800 text-slate-300 text-sm rounded-lg hover:bg-slate-700 transition-colors"
                       >
                         API
-                      </button>
+                      </a>
                     </div>
                   </div>
-                </a>
-              )}
+                </div>
+              ))}
             </div>
 
             {sortedModels.length === 0 && (
